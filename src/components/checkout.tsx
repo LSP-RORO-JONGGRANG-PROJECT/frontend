@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 const products = [
@@ -24,6 +24,7 @@ const products = [
 export default function Checkout() {
   const searchParams = useSearchParams();
   const productName = searchParams.get('product');
+  const router = useRouter();
 
   const product = products.find((p) => p.name === productName);
 
@@ -35,6 +36,8 @@ export default function Checkout() {
   });
 
   const [quantity, setQuantity] = useState(1);
+  const [showModal, setShowModal] = useState(false);
+  const [total, setTotal] = useState(0);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -67,7 +70,8 @@ export default function Checkout() {
 
         const result = await response.json();
         if (response.ok) {
-          alert(`Payment processed successfully! Total: IDR ${result.total}`);
+          setTotal(result.total);
+          setShowModal(true); // Show modal after successful payment
         } else {
           alert(`Error: ${result.error}`);
         }
@@ -77,9 +81,7 @@ export default function Checkout() {
     } else {
       alert('Product not found or price is missing.');
     }
-};
-
-
+  };
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
@@ -183,6 +185,22 @@ export default function Checkout() {
           </div>
         )}
       </div>
+
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+            <h2 className="text-2xl font-bold mb-4">Payment Successful</h2>
+            <p className="mb-4">Thank you for your purchase! The total amount is IDR {total.toLocaleString()}.</p>
+            <p className="mb-6">An invoice has been sent to your email.</p>
+            <button
+              className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors"
+              onClick={() => router.push('/')}
+            >
+              Go to Home
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

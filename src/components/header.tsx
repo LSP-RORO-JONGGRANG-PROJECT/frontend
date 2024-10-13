@@ -90,54 +90,57 @@ const Header: React.FC<HeaderProps> = ({ isActive }) => {
             <img src="/logos/black.png" alt="Logo" className="w-50 h-10" />
           </Link>
           <nav className="flex space-x-6">
-            <Link href="/products">
+            <Link href="/products" className="relative group">
               <span className="hover:text-gray-900">Products</span>
+              <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
             </Link>
-            <Link href="/our-story">
+            <Link href="/our-story" className="relative group">
               <span className="hover:text-gray-900">Our Story</span>
+              <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
             </Link>
-            <Link href="/help">
+            <Link href="/help" className="relative group">
               <span className="hover:text-gray-900">Help</span>
+              <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
             </Link>
           </nav>
           <div className="relative">
-            <div className="flex items-center space-x-4">
-              {/* Shopping Bag Icon */}
-              <div onClick={handleBagClick} className="cursor-pointer">
-                <FontAwesomeIcon
-                  icon={faBagShopping}
-                  className="text-gray-900 border border-dark-300 p-2 rounded hover:bg-black-200"
-                  size="lg"
-                />
-                {cart.length > 0 && (
-                  <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {cart.length}
-                  </span>
-                )}
-              </div>
+  <div className="flex items-center space-x-4">
+    {/* Shopping Bag Icon */}
+    <div onClick={handleBagClick} className="cursor-pointer group relative">
+      <FontAwesomeIcon
+        icon={faBagShopping}
+        className="text-gray-900 border border-dark-300 p-2 rounded transition-colors duration-300 hover:bg-gray-300"
+        size="lg"
+      />
+      <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
+      {cart.length > 0 && (
+        <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+          {cart.length}
+        </span>
+      )}
+    </div>
 
-              {/* User Icon */}
-              {isLoggedIn ? (
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setShowLogout(!showLogout)}
-                >
-                  <FontAwesomeIcon
-                    icon={faUser}
-                    className="text-gray-900 border border-dark-300 p-2 rounded hover:bg-black-200"
-                    size="lg"
-                  />
-                </div>
-              ) : (
-                <Link href="/login">
-                  <FontAwesomeIcon
-                    icon={faUser}
-                    className="text-gray-900 border border-dark-300 p-2 rounded hover:bg-black-200"
-                    size="lg"
-                  />
-                </Link>
-              )}
-            </div>
+    {/* User Icon */}
+    {isLoggedIn ? (
+      <div className="cursor-pointer group relative" onClick={() => setShowLogout(!showLogout)}>
+        <FontAwesomeIcon
+          icon={faUser}
+          className="text-gray-900 border border-dark-300 p-2 rounded transition-colors duration-300 hover:bg-gray-300"
+          size="lg"
+        />
+        <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
+      </div>
+    ) : (
+      <Link href="/login" className="group relative">
+        <FontAwesomeIcon
+          icon={faUser}
+          className="text-gray-900 border border-dark-300 p-2 rounded transition-colors duration-300 hover:bg-gray-300"
+          size="lg"
+        />
+        <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
+      </Link>
+    )}
+  </div>
 
             {/* Logout Subheader */}
             {showLogout && isLoggedIn && (
