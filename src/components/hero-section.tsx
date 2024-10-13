@@ -21,8 +21,19 @@ const HeroSection = () => {
           </h1>
         </div>
       </div>
-      <div className="absolute bottom-6 md:bottom-12 left-6 md:left-12">
+
+      <div className="absolute bottom-6 md:bottom-20 left-6 md:left-12 px-6 md:px-12">
+      <Link href="/products" className="inline-flex items-center justify-center px-8 py-3 border border-white text-white text-lg font-semibold rounded-[70px] w-50 h-12 hover:shadow-[0_0_15px_1px_rgba(255,255,255,0.8)] transition-all">
+      Shop Now →
+      </Link>
       </div>
+
+      <div className="absolute bottom-10 right-6 md:right-12 flex flex-col items-center space-y-4">
+      <div className="border border-white rounded-full w-6 h-6"></div>
+      <span className="text-white text-sm tracking-wider">SCROLL FOR MORE</span>
+      <div className="border-l border-white h-16"></div>
+      </div>
+
     </main>
   );
 }

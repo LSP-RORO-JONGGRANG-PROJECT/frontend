@@ -43,14 +43,14 @@ const products: Product[] = [
     id: 5,
     name: 'MRI Scan',
     price: 'IDR 600.000',
-    imageUrl: '/images/products/usg.jpg',
+    imageUrl: '/images/products/mri.jpg',
     slug: 'mri-scan',
   },
   {
     id: 6,
     name: 'CT Scan',
     price: 'IDR 500.000',
-    imageUrl: '/images/products/usg.jpg',
+    imageUrl: '/images/products/CT.jpeg',
     slug: 'ct-scan',
   }
 ];

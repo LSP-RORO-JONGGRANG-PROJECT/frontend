@@ -30,6 +30,22 @@ const products: Product[] = [
     slug: 'pet-scan',
     description: 'A type of imaging test that uses a radioactive substance to look for disease in the body.',
   },
+  {
+    id: 3,
+    name: 'Surgery',
+    price: 'IDR 408.000',
+    imageUrl: '/images/products/surgery.webp',
+    slug: 'surgery',
+    description: 'A medical procedure that involves the use of instruments to treat injuries, diseases, or deformities by removing, repairing, or replacing tissues or organs.'
+  },
+  {
+    id: 4,
+    name: 'Ultrasonografi',
+    price: 'IDR 438.000',
+    imageUrl: '/images/products/usg.jpg',
+    slug: 'ultrasonografi',
+    description: 'A diagnostic imaging technique that uses high-frequency sound waves to create images of organs and structures inside the body, commonly used during pregnancy and for examining the abdomen.'
+  },  
 ];
 
 export default function ProductDetail({ params }: { params: { slug: string } }) {

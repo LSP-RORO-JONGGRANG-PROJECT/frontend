@@ -8,29 +8,29 @@ const products = [
     name: 'Debrifilator',
     price: 'IDR 438.000',
     imageUrl: '/images/products/debrifilator.jpg',
-    link: '/product/gazelle-hi-black-white'
+    slug: 'debrifilator',
   },
   {
     id: 2,
     name: 'PET Scan',
     price: 'IDR 538.000',
     imageUrl: '/images/products/petscan.webp',
-    link: '/product/retrograde-low-black-white'
+    slug: 'pet-scan',
   },
   {
     id: 3,
     name: 'Surgery',
     price: 'IDR 408.000',
     imageUrl: '/images/products/surgery.webp',
-    link: '/product/gazelle-low-white-blue'
+    slug: 'surgery',
   },
   {
     id: 4,
     name: 'Ultrasonografi',
     price: 'IDR 438.000',
     imageUrl: '/images/products/usg.jpg',
-    link: '/product/gazelle-hi-white-blue'
-  }
+    slug: 'ultrasonografi',
+  },
 ];
 
 const Feature = () => {
@@ -61,8 +61,8 @@ const Feature = () => {
         <div className="flex flex-wrap -m-4 justify-center">
           {products.map((product) => (
             <div key={product.id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
-              <Link href={product.link}>
-                <div className="block relative h-48 rounded overflow-hidden">
+              <Link href={`/productdetail/${product.slug}`}>
+                <div className="block relative h-48 rounded overflow-hidden cursor-pointer">
                   <NextImg
                     alt={product.name}
                     className="object-cover object-center w-full h-full block"
