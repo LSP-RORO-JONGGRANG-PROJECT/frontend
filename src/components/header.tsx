@@ -104,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ isActive }) => {
             </Link>
           </nav>
           <div className="relative">
-  <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-4">
     {/* Shopping Bag Icon */}
     <div onClick={handleBagClick} className="cursor-pointer group relative">
       <FontAwesomeIcon

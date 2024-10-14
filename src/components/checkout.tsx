@@ -187,8 +187,15 @@ export default function Checkout() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300">
+          <div className="bg-white p-8 rounded-xl shadow-2xl transform transition-transform duration-300 scale-100 hover:scale-105 text-center">
+            <Image
+              src="/logos/black.png"
+              alt="Store Logo"
+              width={100}
+              height={100}
+              className="mx-auto mb-4"
+            />
             <h2 className="text-2xl font-bold mb-4">Payment Successful</h2>
             <p className="mb-4">Thank you for your purchase! The total amount is IDR {total.toLocaleString()}.</p>
             <p className="mb-6">An invoice has been sent to your email.</p>
