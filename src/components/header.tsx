@@ -5,6 +5,7 @@ import { useScrollPosition } from "@/hooks/useScrollPosition";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
+import dynamic from 'next/dynamic';
 
 interface HeaderProps {
   isActive?: boolean;
@@ -16,6 +17,8 @@ interface Product {
   price: string;
   imageUrl: string;
 }
+
+const ShoppingBagModal = dynamic(() => import('./shoppingbagModal'), { ssr: false });
 
 const Header: React.FC<HeaderProps> = ({ isActive }) => {
   const scrollPosition = useScrollPosition();
@@ -104,45 +107,42 @@ const Header: React.FC<HeaderProps> = ({ isActive }) => {
             </Link>
           </nav>
           <div className="relative">
-    <div className="flex items-center space-x-4">
-    {/* Shopping Bag Icon */}
-    <div onClick={handleBagClick} className="cursor-pointer group relative">
-      <FontAwesomeIcon
-        icon={faBagShopping}
-        className="text-gray-900 border border-dark-300 p-2 rounded transition-colors duration-300 hover:bg-gray-300"
-        size="lg"
-      />
-      <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
-      {cart.length > 0 && (
-        <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-          {cart.length}
-        </span>
-      )}
-    </div>
+            <div className="flex items-center space-x-4">
+              <div onClick={handleBagClick} className="cursor-pointer group relative">
+                <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="text-gray-900 border border-dark-300 p-2 rounded transition-colors duration-300 hover:bg-gray-300"
+                  size="lg"
+                />
+                <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
+                {cart.length > 0 && (
+                  <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cart.length}
+                  </span>
+                )}
+              </div>
 
-    {/* User Icon */}
-    {isLoggedIn ? (
-      <div className="cursor-pointer group relative" onClick={() => setShowLogout(!showLogout)}>
-        <FontAwesomeIcon
-          icon={faUser}
-          className="text-gray-900 border border-dark-300 p-2 rounded transition-colors duration-300 hover:bg-gray-300"
-          size="lg"
-        />
-        <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
-      </div>
-    ) : (
-      <Link href="/login" className="group relative">
-        <FontAwesomeIcon
-          icon={faUser}
-          className="text-gray-900 border border-dark-300 p-2 rounded transition-colors duration-300 hover:bg-gray-300"
-          size="lg"
-        />
-        <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
-      </Link>
-    )}
-  </div>
+              {isLoggedIn ? (
+                <div className="cursor-pointer group relative" onClick={() => setShowLogout(!showLogout)}>
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    className="text-gray-900 border border-dark-300 p-2 rounded transition-colors duration-300 hover:bg-gray-300"
+                    size="lg"
+                  />
+                  <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
+                </div>
+              ) : (
+                <Link href="/login" className="group relative">
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    className="text-gray-900 border border-dark-300 p-2 rounded transition-colors duration-300 hover:bg-gray-300"
+                    size="lg"
+                  />
+                  <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              )}
+            </div>
 
-            {/* Logout Subheader */}
             {showLogout && isLoggedIn && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-20">
                 <button
@@ -157,45 +157,12 @@ const Header: React.FC<HeaderProps> = ({ isActive }) => {
         </div>
       </header>
 
-      {/* Shopping Bag Modal */}
       {showBagDetails && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-end">
-          <div className="bg-white w-1/3 h-full p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold">Shopping Bag</h2>
-              <button
-                className="text-xl font-bold"
-                onClick={() => setShowBagDetails(false)}
-              >
-                &times;
-              </button>
-            </div>
-
-            <div className="flex flex-col space-y-4">
-              {cart.length === 0 ? (
-                <p>Your shopping bag is empty.</p>
-              ) : (
-                cart.map(item => (
-                  <div key={item.id} className="flex justify-between items-center">
-                    <span>{item.name}</span>
-                    <span>{item.price}</span>
-                    <button
-                      onClick={() => removeFromCart(item.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ))
-              )}
-              {cart.length > 0 && (
-                <button className="mt-auto bg-black text-white py-2 px-4">
-                  Proceed to Checkout
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
+        <ShoppingBagModal
+          cart={cart}
+          onClose={() => setShowBagDetails(false)}
+          onRemoveItem={removeFromCart}
+        />
       )}
     </>
   );
